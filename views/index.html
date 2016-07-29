@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <p>
+        Click <a href="/example/">here</a> for an example of a subpage.
+    </p>
+    
+    <p>
+        Click <a href="javascript:void(0)" id="trigger-api">here</a> for an example of a JSON API call.
+    </p>
+    
+    <script>
+        document.getElementById('trigger-api').onclick = function () {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/api/example/get-hello-world', true);
+            request.onload = function() {
+                if (this.status >= 200 && this.status < 400) {
+                    alert(JSON.parse(this.response));
+                }
+            };
+            request.send();
+        };
+    </script>
+</body>
+</html>

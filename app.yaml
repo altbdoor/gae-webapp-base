@@ -1,0 +1,42 @@
+application: gae-webapp2-base
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "30d"
+
+handlers:
+
+# py app
+- url: /api/.*
+  script: wsgi.app
+
+# folder urls
+- url: /(.+)/$
+  static_files: views/\1/index.html
+  upload: views/(.+)/index.html
+  secure: always
+  expiration: "30m"
+
+# index html
+- url: /$
+  static_files: views/index.html
+  upload: views/index.html
+  secure: always
+
+# static
+- url: /(.*\.(css|js|txt|ico))
+  static_files: views/\1
+  upload: views/(.*\.(css|js|txt|ico))
+  secure: optional
+
+
+skip_files:
+- ^(.*/)?.*\.pyc$
+- ^(.*/)?\..*$
+- ^app\.yaml$
+- ^LICENSE$
+- ^get_requirements\.py$
+- ^requirements\.txt$
+- ^libs/.*/
