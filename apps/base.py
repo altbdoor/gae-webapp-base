@@ -12,7 +12,7 @@ class Base(RequestHandler):
         self.initialize(request, response)
 
     def write_json(self, data):
-        # https://github.com/GoogleCloudPlatform/webapp2/issues/116
+        # https://code.google.com/p/googleappengine/issues/detail?id=7116
         # self.response.headers[b'Access-Control-Allow-Origin'] = b'*'
         self.response.headers[b'Content-Type'] = b'application/json'
         self.response.out.write(json.dumps(data))
