@@ -46,7 +46,7 @@ for root, dirnames, filenames in walk(libs_dir):
 print("> Zipping dependencies")
 zip_path = join(libs_dir, 'compiled.zip')
 zip_handler = zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED)
-zip_exclude=('.gitignore', 'compiled.zip')
+zip_exclude = ('.gitignore', 'compiled.zip', )
 
 for root, dirs, files in walk(libs_dir):
     if not root.endswith('.dist-info'):
