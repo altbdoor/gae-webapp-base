@@ -14,6 +14,7 @@ import zipfile
 # prep paths
 current_dir = dirname(abspath(__file__))
 libs_dir = join(current_dir, 'libs')
+libs_exclude = ('.gitignore', 'compiled.zip', )
 
 print('> Build libs starting')
 
@@ -24,6 +25,8 @@ for item in listdir(libs_dir):
 
     if isdir(item_dir):
         shutil.rmtree(item_dir)
+    elif item not in libs_exclude:
+        remove(item_dir)
 
 compiled_zip_path = join(libs_dir, 'compiled.zip')
 if isfile(compiled_zip_path):
@@ -46,12 +49,11 @@ for root, dirnames, filenames in walk(libs_dir):
 print("> Zipping dependencies")
 zip_path = join(libs_dir, 'compiled.zip')
 zip_handler = zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED)
-zip_exclude = ('.gitignore', 'compiled.zip', )
 
 for root, dirs, files in walk(libs_dir):
     if not root.endswith('.dist-info'):
         for file in files:
-            skip_zip = (normpath(root) == normpath(libs_dir) and file in zip_exclude)
+            skip_zip = (normpath(root) == normpath(libs_dir) and file in libs_exclude)
 
             if not skip_zip:
                 zip_handler.write(
